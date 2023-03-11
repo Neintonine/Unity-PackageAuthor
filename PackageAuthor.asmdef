@@ -1,0 +1,16 @@
+﻿{
+    "name": "PackageAuthor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3815b6546cdae8c4ca86404c23d439dc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
