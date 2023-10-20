@@ -93,25 +93,26 @@ namespace PackageAuthor.Displays
 
             string identifier = $"{prefix}.{company}.{packagename}";
             
-            string[] unityVersionSplit = Application.unityVersion.Split('.', StringSplitOptions.RemoveEmptyEntries);
+            string[] unityVersionSplit = Application.unityVersion.Split(new [] {'.'}, StringSplitOptions.RemoveEmptyEntries);
             string unityVersion = unityVersionSplit[0] + "." + unityVersionSplit[1]; 
 
-            JObject json = new JObject();
-            json.Add("name", identifier);
-            json.Add("version", "1.0.0");
-            json.Add("unity", unityVersion);
-            json.Add("hideInEditor", true);
-            json.Add("license", "MIT");
-            json.Add("description", "[DESCRIPTION]");
-            json.Add("displayName", "[DISPLAYNAME]");
-            json.Add("author", JObject.FromObject(
-                new {
-                    name = this._authorName,
-                    url = this._authorURL,
-                    email = this._authorEMail
-                })
-            );
-            
+            JObject json = new JObject
+            {
+                { "name", identifier },
+                { "version", "1.0.0" },
+                { "unity", unityVersion },
+                { "hideInEditor", true },
+                { "license", "MIT" },
+                { "description", "[DESCRIPTION]" },
+                { "displayName", "[DISPLAYNAME]" },
+                { "author", JObject.FromObject(
+                    new {
+                        name = this._authorName,
+                        url = this._authorURL,
+                        email = this._authorEMail
+                    }) }
+            };
+
             string jsonResult = json.ToString();
 
             File.WriteAllText(this._targetJsonPath, jsonResult);

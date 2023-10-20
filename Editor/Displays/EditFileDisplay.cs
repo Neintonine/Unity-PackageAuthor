@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using PackageAuthor.Dialogs;
 using PackageAuthor.Values;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
-using static UnityEngine.GUILayout;
 
 namespace PackageAuthor.Displays
 {
@@ -31,31 +28,31 @@ namespace PackageAuthor.Displays
                 "Essentials", 
                 new List<EditorField>()
                 {
-                    new("Identifier", "name"),
-                    new("Package Version", "version"),
-                    new("Unity Version", "unity"),
-                    new("Unity Release", "unityRelease")
+                    new EditorField("Identifier", "name"),
+                    new EditorField("Package Version", "version"),
+                    new EditorField("Unity Version", "unity"),
+                    new EditorField("Unity Release", "unityRelease")
                 }
             },
             {
                 "General", 
                 new List<EditorField>()
                 {
-                    new("Display Name", "displayName"),
-                    new("Description", "description"),
-                    new("Changelog URL", "changelogURL"),
-                    new("Documentation URL", "documentationURL"),
-                    new("Licence", "license"),
-                    new("Licence URL", "licenseURL")
+                    new EditorField("Display Name", "displayName"),
+                    new EditorField("Description", "description"),
+                    new EditorField("Changelog URL", "changelogURL"),
+                    new EditorField("Documentation URL", "documentationURL"),
+                    new EditorField("Licence", "license"),
+                    new EditorField("Licence URL", "licenseURL")
                 }
             },
             {
                 "Author",
                 new List<EditorField>()
                 {
-                    new("Name", "author.name"),
-                    new("E-Mail", "author.email"),
-                    new("URL", "author.url"),
+                    new EditorField("Name", "author.name"),
+                    new EditorField("E-Mail", "author.email"),
+                    new EditorField("URL", "author.url"),
                 }
             }
         };
@@ -238,7 +235,7 @@ namespace PackageAuthor.Displays
                     
                     if (field.TargetKey.Contains("."))
                     {
-                        string[] splitkeys = field.TargetKey.Split('.', 2);
+                        string[] splitkeys = field.TargetKey.Split(new []{ '.' }, 2);
                         name = splitkeys[0];
                         intermediaryObject.Add(splitkeys[1], field.Value);
                         continue;
@@ -263,7 +260,7 @@ namespace PackageAuthor.Displays
 
             if (this._dependencies.Count > 0)
             {
-                JObject dependencies = new();
+                JObject dependencies = new JObject();
                 foreach (Dependency dependency in this._dependencies)
                 {
                     dependencies.Add(dependency.PackageName, dependency.PackageVersion);
@@ -274,7 +271,7 @@ namespace PackageAuthor.Displays
 
             if (this._samples.Count > 0)
             {
-                JArray samples = new();
+                JArray samples = new JArray();
                 foreach (Sample sample in this._samples)
                 {
                     samples.Add(JObject.FromObject(sample));
