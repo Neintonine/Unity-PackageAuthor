@@ -1,6 +1,6 @@
 {
   "name": "com.iedsoftworks.packageauthor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "unity": "2020.3",
   "displayName": "Package Author",
   "description": "A new window that allows you to easily add and edit your package.json in the unity editor.",

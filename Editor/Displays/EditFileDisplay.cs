@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using PackageAuthor.Values;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
@@ -215,6 +216,37 @@ namespace PackageAuthor.Displays
             if (jsonObject.ContainsKey("hideInEditor"))
             {
                 this._hideInEditor = jsonObject.Value<bool>("hideInEditor");
+            }
+
+            if (jsonObject.ContainsKey("keywords"))
+            {
+                this._keywords = (jsonObject).Value<JArray>("keywords").Values<string>().ToList();
+            }
+
+            if (jsonObject.ContainsKey("dependencies"))
+            {
+                JObject dependencies = jsonObject.Value<JObject>("dependencies");
+                this._dependencies = new List<Dependency>();
+                foreach (KeyValuePair<string,JToken?> valuePair in dependencies)
+                {
+                    this._dependencies.Add(
+                        new Dependency()
+                        {
+                            PackageName = valuePair.Key,
+                            PackageVersion = valuePair.Value.Value<string>(),
+                        }
+                    );
+                }
+            }
+
+            if (jsonObject.ContainsKey("samples"))
+            {
+                this._samples = jsonObject.Value<JArray>("samples").Select(
+                    token =>
+                    {
+                        return token.ToObject<Sample>();
+                    }
+                ).ToList();
             }
         }
 
